@@ -1,4 +1,4 @@
-package com.mengzhidu.dream.nuff.remote.rpc.netty4.client;
+package com.mengzhidu.dream.nuff.remote.rpc.handler;
 
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCFuture;
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCResponse;
@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 /**
  * Created by xinxing on 2018/12/15
  */
-public class RPCClientResponseHandler {
+public class ClientResponseHandler {
 
     private ConcurrentHashMap<Integer, RPCFuture> invokeMap = new ConcurrentHashMap<Integer, RPCFuture>();
 
@@ -20,7 +20,7 @@ public class RPCClientResponseHandler {
 
     private BlockingQueue<RPCResponse>  messageBlockingQueue = new LinkedBlockingDeque<RPCResponse>();
 
-    public RPCClientResponseHandler(int threads) {
+    public ClientResponseHandler(int threads) {
         executorService = Executors.newFixedThreadPool(threads);
         for (int i = 0; i < threads; i++) {
             executorService.execute(new RPCClientResponseHandlerRunnable(invokeMap, messageBlockingQueue));

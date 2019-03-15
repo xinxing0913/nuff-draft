@@ -20,7 +20,6 @@ public class ServerChannelHandler {
             @Override
             protected void initChannel(SocketChannel ch) throws Exception {
                 ChannelPipeline pipeline = ch.pipeline();
-                //pipeline.addLast("decoder", new Netty)
                 pipeline.addLast("decoder", new NettyKryoDecoder());
                 pipeline.addLast("encoder", new NettyKryoEncoder());
                 pipeline.addLast("request", new ServerDispatchHandler(defaultServerRequestHandler));

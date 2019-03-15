@@ -1,11 +1,9 @@
 package com.mengzhidu.dream.nuff.remote.rpc.netty4.client;
 
-
-import com.mengzhidu.dream.nuff.remote.rpc.client.RPCClient;
+import com.mengzhidu.dream.nuff.remote.rpc.client.AbstractClient;
 import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.ClientChannelHandler;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.RPCClientChannelInactiveListener;
-import com.mengzhidu.dream.nuff.remote.rpc.request.RPCFuture;
 import com.mengzhidu.dream.nuff.remote.rpc.netty4.message.CodecUtil;
+import com.mengzhidu.dream.nuff.remote.rpc.request.RPCFuture;
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCRequest;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -18,9 +16,9 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by xinxing on 2018/12/14
+ * Created by xinxing on 2019/3/15
  */
-public class Client extends RPCClient {
+public class DefaultClient extends AbstractClient {
 
     private EventLoopGroup eventLoopGroup;
 
@@ -28,12 +26,8 @@ public class Client extends RPCClient {
 
     private ChannelFuture channelFuture;
 
-    private RPCClientResponseHandler responseHandler = new RPCClientResponseHandler(1);
-
-    private RPCClientChannelInactiveListener inactiveListener;
 
     public boolean doInit() throws Exception {
-
         if (eventLoopGroup == null) {
             eventLoopGroup = new NioEventLoopGroup();
         }
@@ -42,15 +36,10 @@ public class Client extends RPCClient {
             bootstrap = new Bootstrap();
         }
 
-        if (inactiveListener == null) {
-            inactiveListener = new RPCClientChannelInactiveListener();
-            inactiveListener.setRpcClient(this);
-        }
-
         bootstrap.group(eventLoopGroup)
                 .channel(NioSocketChannel.class)
                 .remoteAddress(getRemoteAddress())
-        .handler(ClientChannelHandler.getDefaultChannelHandler(responseHandler, inactiveListener));
+                .handler(ClientChannelHandler.getDefaultChannelHandler(responseHandler, inactiveHandler));
 
         channelFuture = bootstrap.connect().sync();
         System.out.println("client connect...");
@@ -119,7 +108,12 @@ public class Client extends RPCClient {
         return rpcFuture;
     }
 
-    public InetSocketAddress getRemoteAddress() {
-        return new InetSocketAddress("127.0.0.1", 3190);
+    private InetSocketAddress getRemoteAddress() {
+        return new InetSocketAddress(clientConfig.getHost(), clientConfig.getPort());
+    }
+
+    @Override
+    public void reConnect() {
+
     }
 }

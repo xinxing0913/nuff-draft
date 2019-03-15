@@ -1,8 +1,7 @@
 package com.mengzhidu.dream.nuff.remote.rpc.netty4.handler;
 
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.client.RPCClientResponseHandler;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.ClientDispatchHandler;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.RPCClientChannelInactiveListener;
+import com.mengzhidu.dream.nuff.remote.rpc.handler.ClientChannelInactiveHandler;
+import com.mengzhidu.dream.nuff.remote.rpc.handler.ClientResponseHandler;
 import com.mengzhidu.dream.nuff.serialize.kryo.NettyKryoDecoder;
 import com.mengzhidu.dream.nuff.serialize.kryo.NettyKryoEncoder;
 import io.netty.channel.ChannelHandler;
@@ -17,8 +16,8 @@ import io.netty.channel.socket.SocketChannel;
 public class ClientChannelHandler {
 
     public static ChannelHandler getDefaultChannelHandler(
-            final RPCClientResponseHandler rpcClientResponseHandler,
-            final RPCClientChannelInactiveListener rpcClientChannelInactiveListener) {
+            final ClientResponseHandler clientResponseHandler,
+            final ClientChannelInactiveHandler inactiveHandler) {
 
         return new ChannelInitializer<SocketChannel>() {
 
@@ -27,7 +26,8 @@ public class ClientChannelHandler {
                 ChannelPipeline pipeline = ch.pipeline();
                 pipeline.addLast("decoder", new NettyKryoDecoder());
                 pipeline.addLast("encoder", new NettyKryoEncoder());
-                pipeline.addLast("request", new ClientDispatchHandler(rpcClientResponseHandler, rpcClientChannelInactiveListener));
+                pipeline.addLast("request", new ClientDispatchHandler(clientResponseHandler,
+                        inactiveHandler));
             }
         };
 

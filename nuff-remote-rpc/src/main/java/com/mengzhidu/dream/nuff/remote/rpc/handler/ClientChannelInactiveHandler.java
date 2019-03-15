@@ -1,18 +1,15 @@
-package com.mengzhidu.dream.nuff.remote.rpc.netty4.handler;
+package com.mengzhidu.dream.nuff.remote.rpc.handler;
 
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.client.Client;
+import com.mengzhidu.dream.nuff.remote.rpc.client.Client;
 
 /**
- * Created by xinxing on 2018/12/16
+ * Created by xinxing on 2019/3/16
  */
-public class RPCClientChannelInactiveListener {
+public class ClientChannelInactiveHandler {
 
     private Client rpcClient;
 
-    public RPCClientChannelInactiveListener() {
-    }
-
-    public RPCClientChannelInactiveListener(Client rpcClient) {
+    public ClientChannelInactiveHandler(Client rpcClient) {
         this.rpcClient = rpcClient;
     }
 
@@ -23,7 +20,7 @@ public class RPCClientChannelInactiveListener {
     public void onInactive() {
         System.out.println("connection with server is closed...");
 
-        rpcClient.tryConnect();
+        rpcClient.reConnect();
     }
 
     public Client getRpcClient() {

@@ -1,14 +1,14 @@
-package com.mengzhidu.dream.nuff.remote.rpc.netty4.client;
+package com.mengzhidu.dream.nuff.remote.rpc.builder;
 
+import com.mengzhidu.dream.nuff.remote.rpc.client.Client;
 import com.mengzhidu.dream.nuff.remote.rpc.hook.RPCInvokeHook;
-import com.mengzhidu.dream.nuff.remote.rpc.proxy.RPCClientAsyncProxy;
 
 import java.lang.reflect.Proxy;
 
 /**
  * RPC客户端代理的构建器
  */
-public class RPCClientProxyBuilder<T> {
+public class ClientProxyBuilder<T> {
 
     private Class<T> clazz;
 
@@ -22,11 +22,11 @@ public class RPCClientProxyBuilder<T> {
 
     private Integer port;
 
-    private RPCClientProxyBuilder(Class<T> clazz) {
+    private ClientProxyBuilder(Class<T> clazz) {
         this.clazz = clazz;
     }
 
-    public RPCClientProxyBuilder<T> timeout(long timeout) {
+    public ClientProxyBuilder<T> timeout(long timeout) {
         if (timeout < 0) {
             throw new IllegalArgumentException("timeout can not be minus");
         }
@@ -34,26 +34,25 @@ public class RPCClientProxyBuilder<T> {
         return this;
     }
 
-    public RPCClientProxyBuilder<T> hook(RPCInvokeHook hook) {
+    public ClientProxyBuilder<T> hook(RPCInvokeHook hook) {
         this.rpcInvokeHook = hook;
         return this;
     }
 
-    public RPCClientProxyBuilder<T> connect(String host, Integer port) {
+    public ClientProxyBuilder<T> connect(String host, Integer port) {
         this.host = host;
         this.port = port;
         return this;
     }
 
+    public ClientProxyBuilder<T> client(Client client) {
+        this.rpcClient = client;
+        return this;
+    }
+
     @SuppressWarnings("unchecked")
     public T build()  {
-        rpcClient = new Client();
         rpcClient.connect();
-        try {
-            rpcClient.doInit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         Object object = Proxy.newProxyInstance(
                 clazz.getClassLoader(),
                 new Class<?>[]{clazz},
@@ -63,14 +62,14 @@ public class RPCClientProxyBuilder<T> {
         return (T)object;
     }
 
-    public RPCClientAsyncProxy buildAsyncProxy() {
-        rpcClient = new Client();
-        rpcClient.connect();
+//    public RPCClientAsyncProxy buildAsyncProxy() {
+//        //rpcClient = new Client();
+//        rpcClient.connect();
+//
+//        return new RPCClientAsyncProxy(rpcClient);
+//    }
 
-        return new RPCClientAsyncProxy(rpcClient);
-    }
-
-    public static <T> RPCClientProxyBuilder<T> create(Class<T> targetClass) {
-        return new RPCClientProxyBuilder<>(targetClass);
+    public static <T> ClientProxyBuilder<T> create(Class<T> targetClass) {
+        return new ClientProxyBuilder<>(targetClass);
     }
 }

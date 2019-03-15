@@ -1,6 +1,7 @@
 package com.mengzhidu.dream.nuff.remote.rpc.netty4.handler;
 
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.client.RPCClientResponseHandler;
+import com.mengzhidu.dream.nuff.remote.rpc.handler.ClientChannelInactiveHandler;
+import com.mengzhidu.dream.nuff.remote.rpc.handler.ClientResponseHandler;
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -10,22 +11,20 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class ClientDispatchHandler extends ChannelInboundHandlerAdapter {
 
-    private RPCClientResponseHandler rpcClientResponseHandler;
+    private ClientResponseHandler clientResponseHandler;
 
-    private RPCClientChannelInactiveListener rpcClientChannelInactiveListener;
+    private ClientChannelInactiveHandler inactiveHandler;
 
-    public ClientDispatchHandler() {
-    }
-
-    public ClientDispatchHandler(RPCClientResponseHandler rpcClientResponseHandler, RPCClientChannelInactiveListener rpcClientChannelInactiveListener) {
-        this.rpcClientResponseHandler = rpcClientResponseHandler;
-        this.rpcClientChannelInactiveListener = rpcClientChannelInactiveListener;
+    public ClientDispatchHandler(ClientResponseHandler rpcClientResponseHandler,
+                                 ClientChannelInactiveHandler inactiveHandler) {
+        this.clientResponseHandler = rpcClientResponseHandler;
+        this.inactiveHandler = inactiveHandler;
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RPCResponse rpcResponse = (RPCResponse) msg;
-        rpcClientResponseHandler.addResponse(rpcResponse);
+        clientResponseHandler.addResponse(rpcResponse);
     }
 
     @Override
@@ -36,8 +35,8 @@ public class ClientDispatchHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        if (rpcClientChannelInactiveListener != null) {
-            rpcClientChannelInactiveListener.onInactive();
+        if (inactiveHandler != null) {
+            inactiveHandler.onInactive();
         }
         super.channelInactive(ctx);
     }

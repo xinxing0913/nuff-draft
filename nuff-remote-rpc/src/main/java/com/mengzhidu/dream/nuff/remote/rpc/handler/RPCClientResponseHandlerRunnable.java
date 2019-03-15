@@ -1,4 +1,4 @@
-package com.mengzhidu.dream.nuff.remote.rpc.netty4.client;
+package com.mengzhidu.dream.nuff.remote.rpc.handler;
 
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCFuture;
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCResponse;
