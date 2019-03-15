@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:nuff="https://dream.mengzhidu.com/nuff/schema"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    https://dream.mengzhidu.com/nuff/schema
+    https://dream.mengzhidu.com/nuff/schema/nuff.xsd">
+
+    <bean id="hiService" class="com.mengzhidu.dream.nuff.demo.common.impl.HiServiceImpl" />
+
+    <nuff:service id = "remoteHiService" interface = "com.mengzhidu.dream.nuff.demo.common.HiService"
+                  ref = "hiService" port="9002" />
+
+</beans>

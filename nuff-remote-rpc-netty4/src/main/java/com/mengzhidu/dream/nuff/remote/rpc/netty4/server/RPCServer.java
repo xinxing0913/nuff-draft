@@ -19,7 +19,7 @@ public class RPCServer {
 
     protected RPCInvokeHook rpcInvokeHook;
 
-    protected ServerRequestHandler serverRequestHandler;
+    protected DefaultServerRequestHandler defaultServerRequestHandler;
 
     public RPCServer(Class<?> interfaceClass, Object beanObject, int port, int threads,
                      RPCInvokeHook rpcInvokeHook) {
@@ -31,9 +31,9 @@ public class RPCServer {
     }
 
     public void init() {
-        if (serverRequestHandler == null) {
-            serverRequestHandler = new ServerRequestHandler(interfaceClass, beanObject, rpcInvokeHook, threads);
-            serverRequestHandler.start();
+        if (defaultServerRequestHandler == null) {
+            defaultServerRequestHandler = new DefaultServerRequestHandler(interfaceClass, beanObject, rpcInvokeHook, threads);
+            defaultServerRequestHandler.start();
         }
     }
 
@@ -42,7 +42,7 @@ public class RPCServer {
      * @param rpcRequest
      */
     public void addRequest(RPCRequestWrapper rpcRequest) {
-        serverRequestHandler.addRequest(rpcRequest);
+        defaultServerRequestHandler.addRequest(rpcRequest);
     }
 
     public void stop() {

@@ -15,11 +15,9 @@
         <module>nuff-remote-rpc-netty4</module>
         <module>nuff-remote</module>
         <module>nuff-serialize</module>
-        <module>nuff-loadbalace</module>
         <module>nuff-spring</module>
         <module>nuff-proxy</module>
         <module>nuff-demo</module>
-        <module>nuff-loadbalance</module>
     </modules>
 
     <build>

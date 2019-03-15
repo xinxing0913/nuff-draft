@@ -1,7 +1,8 @@
-package com.mengzhidu.dream.nuff.remote.rpc.netty4.server;
+package com.mengzhidu.dream.nuff.remote.rpc.handler;
 
 import com.mengzhidu.dream.nuff.remote.rpc.hook.RPCInvokeHook;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.common.RPCRequestWrapper;
+import com.mengzhidu.dream.nuff.remote.rpc.task.ServerRequestTask;
+import com.mengzhidu.dream.nuff.remote.rpc.wrapper.RequestWrapper;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -22,7 +23,7 @@ public class ServerRequestHandler {
 
     private ExecutorService executorService;
 
-    private BlockingQueue<RPCRequestWrapper> blockingQueue = new LinkedBlockingDeque<>();
+    private BlockingQueue<RequestWrapper> blockingQueue = new LinkedBlockingDeque<>();
 
     public ServerRequestHandler(Class<?> interfaceClass, Object serviceProvider, RPCInvokeHook rpcInvokeHook, int threads) {
         this.interfaceClass = interfaceClass;
@@ -40,7 +41,7 @@ public class ServerRequestHandler {
         System.out.println("server handler 的所有task已启动");
     }
 
-    public void addRequest(RPCRequestWrapper rpcRequest) {
+    public void addRequest(RequestWrapper rpcRequest) {
         try {
             blockingQueue.put(rpcRequest);
             System.out.println("server handler任务已提交");

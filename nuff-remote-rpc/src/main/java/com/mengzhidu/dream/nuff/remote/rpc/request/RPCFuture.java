@@ -8,7 +8,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class RPCFuture {
     public final static int STATE_AWAIT = 0;
+
     public final static int STATE_SUCCESS = 1;
+
     public final static int STATE_EXCEPTION = 2;
 
     private CountDownLatch countDownLatch;
@@ -25,17 +27,17 @@ public class RPCFuture {
     public Object get() throws Throwable {
         try {
             countDownLatch.await();
-        } catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        if(state == STATE_SUCCESS)
+        if(state == STATE_SUCCESS) {
             return result;
-        else if(state == STATE_EXCEPTION)
+        } else if(state == STATE_EXCEPTION) {
             throw throwable;
-        else //should not run to here!
+        } else {
             throw new RuntimeException("RpcFuture Exception!");
+        }
     }
 
     public Object get(long timeout) throws Throwable

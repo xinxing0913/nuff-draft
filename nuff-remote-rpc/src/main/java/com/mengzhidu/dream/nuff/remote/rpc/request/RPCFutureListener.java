@@ -5,8 +5,7 @@ package com.mengzhidu.dream.nuff.remote.rpc.request;
  */
 public class RPCFutureListener {
 
-    public void onResult(Object result)
-    {
+    public void onResult(Object result) {
         System.out.println("RpcFutureListener result = " + result.toString());
     }
 

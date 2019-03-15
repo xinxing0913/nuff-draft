@@ -52,7 +52,8 @@ public class RPCServerBuilder {
             threads = Runtime.getRuntime().availableProcessors();
         }
 
-        RPCServer rpcServer = new RPCServer(interfaceClass, serviceProvider, port, threads, rpcInvokeHook);
-        return rpcServer;
+        //RPCServer rpcServer = new RPCServer(interfaceClass, serviceProvider, port, threads, rpcInvokeHook);
+        //return rpcServer;
+        return null;
     }
 }

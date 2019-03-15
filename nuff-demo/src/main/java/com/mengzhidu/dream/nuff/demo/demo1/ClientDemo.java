@@ -1,4 +1,4 @@
-package com.mengzhidu.dream.nuff.demo.demo3;
+package com.mengzhidu.dream.nuff.demo.demo1;
 
 import com.mengzhidu.dream.nuff.demo.common.HiService;
 import com.mengzhidu.dream.nuff.remote.rpc.netty4.client.RPCClientProxyBuilder;

@@ -34,6 +34,11 @@
             <artifactId>nuff-remote-rpc-netty4</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.mengzhidu.dream</groupId>
+            <artifactId>nuff-spring</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>
