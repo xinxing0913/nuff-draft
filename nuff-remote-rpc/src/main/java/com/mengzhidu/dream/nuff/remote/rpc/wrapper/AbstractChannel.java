@@ -5,7 +5,8 @@ import com.mengzhidu.dream.nuff.remote.rpc.request.RPCResponse;
 /**
  * Created by xinxing on 2019/3/15
  */
-public interface NuffChannel {
+public abstract class AbstractChannel implements Channel {
 
-    void writeAndFlush(RPCResponse rpcResponse);
+
+    public abstract void writeAndFlush(RPCResponse rpcResponse);
 }

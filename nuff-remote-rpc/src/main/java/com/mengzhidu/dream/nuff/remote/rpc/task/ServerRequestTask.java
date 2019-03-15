@@ -3,7 +3,7 @@ package com.mengzhidu.dream.nuff.remote.rpc.task;
 import com.esotericsoftware.reflectasm.MethodAccess;
 import com.mengzhidu.dream.nuff.remote.rpc.hook.RPCInvokeHook;
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCResponse;
-import com.mengzhidu.dream.nuff.remote.rpc.wrapper.NuffChannel;
+import com.mengzhidu.dream.nuff.remote.rpc.wrapper.Channel;
 import com.mengzhidu.dream.nuff.remote.rpc.wrapper.RequestWrapper;
 
 import java.util.concurrent.BlockingQueue;
@@ -58,24 +58,24 @@ public class ServerRequestTask implements Runnable {
 
                 result = methodAccess.invoke(beanObject, lastMethodIndex, args);
 
-                NuffChannel nuffChannel = requestWrapper.getNuffChannel();
+                Channel channel = requestWrapper.getChannel();
                 RPCResponse rpcResponse = new RPCResponse();
                 rpcResponse.setRequestId(requestWrapper.getId());
                 rpcResponse.setResult(result);
                 rpcResponse.setSuccess(true);
-                nuffChannel.writeAndFlush(rpcResponse);
+                channel.writeAndFlush(rpcResponse);
 
                 if (rpcInvokeHook != null) {
                     rpcInvokeHook.afterInvoke(interfaceClass, methodName, args, result);
                 }
 
             } catch (Exception e) {
-                NuffChannel nuffChannel = requestWrapper.getNuffChannel();
+                Channel channel = requestWrapper.getChannel();
                 RPCResponse rpcResponse = new RPCResponse();
                 rpcResponse.setRequestId(requestWrapper.getId());
                 rpcResponse.setThrowable(e);
                 rpcResponse.setSuccess(false);
-                nuffChannel.writeAndFlush(rpcResponse);
+                channel.writeAndFlush(rpcResponse);
             }
         }
     }

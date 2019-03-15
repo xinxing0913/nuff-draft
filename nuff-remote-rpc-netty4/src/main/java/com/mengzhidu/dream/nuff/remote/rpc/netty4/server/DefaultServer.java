@@ -2,7 +2,7 @@ package com.mengzhidu.dream.nuff.remote.rpc.netty4.server;
 
 import com.mengzhidu.dream.nuff.remote.rpc.handler.ServerRequestHandler;
 import com.mengzhidu.dream.nuff.remote.rpc.hook.RPCInvokeHook;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.common.ServerChannelHandler;
+import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.ServerChannelHandler;
 import com.mengzhidu.dream.nuff.remote.rpc.server.AbstractServer;
 import com.mengzhidu.dream.nuff.remote.rpc.server.ServerConfig;
 import io.netty.bootstrap.ServerBootstrap;
@@ -28,8 +28,6 @@ public class DefaultServer extends AbstractServer {
 
     private EventLoopGroup workerGroup;
 
-    private ServerRequestHandler defaultServerRequestHandler;
-
     private ServerBootstrap serverBootstrap;
 
     public DefaultServer(Class<?> interfaceClass, Object beanObject, int port, int threads,
@@ -51,15 +49,15 @@ public class DefaultServer extends AbstractServer {
             workerGroup = new NioEventLoopGroup(serverConfig.getWorkerThreads());
         }
 
-        if (defaultServerRequestHandler == null) {
-            defaultServerRequestHandler = new ServerRequestHandler(interfaceClass, beanObject, rpcInvokeHook, threads);
+        if (serverRequestHandler == null) {
+            serverRequestHandler = new ServerRequestHandler(interfaceClass, beanObject, rpcInvokeHook, threads);
         }
 
         if (serverBootstrap == null) {
             serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(ServerChannelHandler.getDefaultChannelHandler(defaultServerRequestHandler));
+                    .childHandler(ServerChannelHandler.getDefaultChannelHandler(serverRequestHandler));
 
             serverBootstrap.childOption(ChannelOption.TCP_NODELAY, true);
             serverBootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
@@ -68,7 +66,7 @@ public class DefaultServer extends AbstractServer {
             ChannelFuture channelFuture = serverBootstrap.bind(inetSocketAddress);
             channelFuture.syncUninterruptibly();
 
-            defaultServerRequestHandler.start();
+            serverRequestHandler.start();
         }
     }
 

@@ -5,11 +5,11 @@ import com.mengzhidu.dream.nuff.remote.rpc.request.RPCRequest;
 
 public class RequestWrapper {
     private final RPCRequest rpcRequest;
-    private final NuffChannel nuffChannel;
+    private final Channel channel;
 
-    public RequestWrapper(RPCRequest rpcRequest, NuffChannel nuffChannel) {
+    public RequestWrapper(RPCRequest rpcRequest, Channel channel) {
         this.rpcRequest = rpcRequest;
-        this.nuffChannel = nuffChannel;
+        this.channel = channel;
     }
 
     public int getId() {
@@ -24,15 +24,15 @@ public class RequestWrapper {
         return rpcRequest.getArgs();
     }
 
-    public NuffChannel getNuffChannel() {
-        return nuffChannel;
+    public Channel getChannel() {
+        return channel;
     }
 
     @Override
     public String toString() {
         return "RPCRequestWrapper{" +
                 "rpcRequest=" + rpcRequest +
-                ", nuffChannel=" + nuffChannel +
+                ", channel=" + channel +
                 '}';
     }
 }

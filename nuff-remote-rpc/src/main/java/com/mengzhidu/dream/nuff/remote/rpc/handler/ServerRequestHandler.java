@@ -13,6 +13,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  * Created by xinxing on 2018/12/16
  */
 public class ServerRequestHandler {
+
     private Class<?> interfaceClass;
 
     private Object serviceProvider;

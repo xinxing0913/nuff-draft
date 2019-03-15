@@ -1,8 +1,7 @@
-package com.mengzhidu.dream.nuff.remote.rpc.netty4.common;
+package com.mengzhidu.dream.nuff.remote.rpc.netty4.handler;
 
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.client.RPCClientResponseHandler;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.ClientDispatchHandler;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.RPCClientChannelInactiveListener;
+import com.mengzhidu.dream.nuff.remote.rpc.handler.ServerRequestHandler;
+import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.ServerDispatchHandler;
 import com.mengzhidu.dream.nuff.serialize.kryo.NettyKryoDecoder;
 import com.mengzhidu.dream.nuff.serialize.kryo.NettyKryoEncoder;
 import io.netty.channel.ChannelHandler;
@@ -10,13 +9,12 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 
-
 /**
- * Created by xinxing on 2018/12/14
+ * Created by xinxing on 2018/12/16
  */
-public class ClientChannelHandler {
+public class ServerChannelHandler {
 
-    public static ChannelHandler getDefaultChannelHandler(final RPCClientResponseHandler rpcClientResponseHandler, final RPCClientChannelInactiveListener rpcClientChannelInactiveListener) {
+    public static ChannelHandler getDefaultChannelHandler(final ServerRequestHandler defaultServerRequestHandler) {
         return new ChannelInitializer<SocketChannel>() {
 
             @Override
@@ -25,9 +23,8 @@ public class ClientChannelHandler {
                 //pipeline.addLast("decoder", new Netty)
                 pipeline.addLast("decoder", new NettyKryoDecoder());
                 pipeline.addLast("encoder", new NettyKryoEncoder());
-                pipeline.addLast("request", new ClientDispatchHandler(rpcClientResponseHandler, rpcClientChannelInactiveListener));
+                pipeline.addLast("request", new ServerDispatchHandler(defaultServerRequestHandler));
             }
         };
     }
-
 }

@@ -1,8 +1,7 @@
 package com.mengzhidu.dream.nuff.remote.rpc.netty4.handler;
 
 import com.mengzhidu.dream.nuff.remote.rpc.handler.ServerRequestHandler;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.common.RPCRequestWrapper;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.server.DefaultNuffChannel;
+import com.mengzhidu.dream.nuff.remote.rpc.netty4.server.DefaultChannel;
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCRequest;
 import com.mengzhidu.dream.nuff.remote.rpc.wrapper.RequestWrapper;
 import io.netty.channel.ChannelHandlerContext;
@@ -26,9 +25,8 @@ public class ServerDispatchHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RPCRequest rpcRequest = (RPCRequest) msg;
         System.out.println("new request:" + rpcRequest);
-//        RPCRequestWrapper wrapper = new RPCRequestWrapper(rpcRequest, ctx.channel());
-        DefaultNuffChannel defaultNuffChannel = new DefaultNuffChannel(ctx.channel());
-        RequestWrapper requestWrapper = new RequestWrapper(rpcRequest, defaultNuffChannel);
+        DefaultChannel defaultChannel = new DefaultChannel(ctx.channel());
+        RequestWrapper requestWrapper = new RequestWrapper(rpcRequest, defaultChannel);
 
         defaultServerRequestHandler.addRequest(requestWrapper);
     }

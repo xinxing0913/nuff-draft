@@ -2,7 +2,7 @@ package com.mengzhidu.dream.nuff.remote.rpc.netty4.client;
 
 
 import com.mengzhidu.dream.nuff.remote.rpc.client.RPCClient;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.common.ClientChannelHandler;
+import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.ClientChannelHandler;
 import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.RPCClientChannelInactiveListener;
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCFuture;
 import com.mengzhidu.dream.nuff.remote.rpc.netty4.message.CodecUtil;
