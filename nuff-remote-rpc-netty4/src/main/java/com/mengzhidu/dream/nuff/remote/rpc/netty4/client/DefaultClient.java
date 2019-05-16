@@ -1,8 +1,8 @@
 package com.mengzhidu.dream.nuff.remote.rpc.netty4.client;
 
 import com.mengzhidu.dream.nuff.remote.rpc.client.AbstractClient;
+import com.mengzhidu.dream.nuff.remote.rpc.config.ChannelConfig;
 import com.mengzhidu.dream.nuff.remote.rpc.netty4.handler.ClientChannelHandler;
-import com.mengzhidu.dream.nuff.remote.rpc.netty4.message.CodecUtil;
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCFuture;
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCRequest;
 import io.netty.bootstrap.Bootstrap;
@@ -13,7 +13,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.net.InetSocketAddress;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by xinxing on 2019/3/15
@@ -85,26 +84,6 @@ public class DefaultClient extends AbstractClient {
             // todo
             return null;
         }
-
-        return rpcFuture;
-    }
-
-
-    public RPCFuture call() {
-        RPCFuture rpcFuture = new RPCFuture();
-        responseHandler.register(1, rpcFuture);
-        int timeout = 20;
-        Channel ch = channelFuture.channel();
-        byte[] data = CodecUtil.encode("hahaha");
-        ChannelFuture channelFuture = ch.writeAndFlush(data);
-
-        boolean result = channelFuture.awaitUninterruptibly(timeout, TimeUnit.MILLISECONDS);
-
-        if (result && channelFuture.isSuccess()) {
-            return rpcFuture;
-        } else {
-            System.out.println("失败....");
-        }
         return rpcFuture;
     }
 
@@ -114,6 +93,11 @@ public class DefaultClient extends AbstractClient {
 
     @Override
     public void reConnect() {
+
+    }
+
+    @Override
+    public void config(ChannelConfig channelConfig) {
 
     }
 }

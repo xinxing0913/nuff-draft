@@ -31,6 +31,8 @@ public class RPCFuture {
             e.printStackTrace();
         }
 
+        System.out.println("state:" + state);
+
         if(state == STATE_SUCCESS) {
             return result;
         } else if(state == STATE_EXCEPTION) {
@@ -40,28 +42,25 @@ public class RPCFuture {
         }
     }
 
-    public Object get(long timeout) throws Throwable
-    {
+    public Object get(long timeout) throws Throwable {
         boolean awaitSuccess = true;
-        try
-        {
+        try {
             awaitSuccess = countDownLatch.await(timeout, TimeUnit.MILLISECONDS);
-        }
-        catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        if(!awaitSuccess) {
+        if (!awaitSuccess) {
             System.out.println("等待失败");
         }
 
-        if(state == STATE_SUCCESS)
+        if (state == STATE_SUCCESS) {
             return result;
-        else if(state == STATE_EXCEPTION)
+        } else if (state == STATE_EXCEPTION) {
             throw throwable;
-        else //should not run to here!
+        } else {
             throw new RuntimeException("RpcFuture Exception!");
+        }
     }
 
     /**
@@ -93,15 +92,23 @@ public class RPCFuture {
         countDownLatch.countDown();
     }
 
-    public boolean isDone()
-    {
+    public boolean isDone() {
         return state != STATE_AWAIT;
     }
 
-    public void setRpcFutureListener(RPCFutureListener rpcFutureListener)
-    {
+    public void setRpcFutureListener(RPCFutureListener rpcFutureListener) {
         this.rpcFutureListener = rpcFutureListener;
     }
 
 
+    @Override
+    public String toString() {
+        return "RPCFuture{" +
+                "countDownLatch=" + countDownLatch +
+                ", result=" + result +
+                ", throwable=" + throwable +
+                ", state=" + state +
+                ", rpcFutureListener=" + rpcFutureListener +
+                '}';
+    }
 }

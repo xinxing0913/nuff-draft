@@ -19,7 +19,6 @@ public class ClientChannelInactiveHandler {
      */
     public void onInactive() {
         System.out.println("connection with server is closed...");
-
         rpcClient.reConnect();
     }
 

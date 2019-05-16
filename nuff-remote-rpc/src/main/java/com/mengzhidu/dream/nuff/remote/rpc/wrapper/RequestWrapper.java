@@ -28,6 +28,10 @@ public class RequestWrapper {
         return channel;
     }
 
+    public RPCRequest getRpcRequest() {
+        return rpcRequest;
+    }
+
     @Override
     public String toString() {
         return "RPCRequestWrapper{" +

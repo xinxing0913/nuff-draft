@@ -1,4 +1,4 @@
-package com.mengzhidu.dream.nuff.remote.rpc;
+package com.mengzhidu.dream.nuff.remote.rpc.task;
 
 
 import com.mengzhidu.dream.nuff.remote.rpc.request.RPCFuture;

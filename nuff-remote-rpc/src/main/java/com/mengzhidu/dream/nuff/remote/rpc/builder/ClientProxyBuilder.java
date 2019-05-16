@@ -62,13 +62,6 @@ public class ClientProxyBuilder<T> {
         return (T)object;
     }
 
-//    public RPCClientAsyncProxy buildAsyncProxy() {
-//        //rpcClient = new Client();
-//        rpcClient.connect();
-//
-//        return new RPCClientAsyncProxy(rpcClient);
-//    }
-
     public static <T> ClientProxyBuilder<T> create(Class<T> targetClass) {
         return new ClientProxyBuilder<>(targetClass);
     }

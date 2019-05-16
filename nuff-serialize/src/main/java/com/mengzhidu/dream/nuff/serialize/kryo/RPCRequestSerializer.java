@@ -32,20 +32,4 @@ public class RPCRequestSerializer extends Serializer<RPCRequest> {
         rpcRequest.setArgs(args);
         return rpcRequest;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

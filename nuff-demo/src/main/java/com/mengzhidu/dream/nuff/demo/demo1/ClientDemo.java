@@ -3,7 +3,7 @@ package com.mengzhidu.dream.nuff.demo.demo1;
 import com.mengzhidu.dream.nuff.demo.common.HiService;
 import com.mengzhidu.dream.nuff.remote.rpc.builder.ClientProxyBuilder;
 import com.mengzhidu.dream.nuff.remote.rpc.client.Client;
-import com.mengzhidu.dream.nuff.remote.rpc.client.ClientConfig;
+import com.mengzhidu.dream.nuff.remote.rpc.config.ClientConfig;
 import com.mengzhidu.dream.nuff.remote.rpc.netty4.client.DefaultClient;
 
 /**

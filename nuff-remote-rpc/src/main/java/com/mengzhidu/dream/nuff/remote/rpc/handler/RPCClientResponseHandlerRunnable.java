@@ -30,6 +30,8 @@ public class RPCClientResponseHandlerRunnable implements Runnable {
                 if (rpcResponse.isSuccess()) {
                     rpcFuture.setResult(rpcResponse.getResult());
                 } else {
+//                    rpcResponse.getThrowable().printStackTrace();
+                    System.out.println("rpcResponse:" + rpcResponse);
                     rpcFuture.setThrowable(rpcResponse.getThrowable());
                 }
             } catch (InterruptedException e) {

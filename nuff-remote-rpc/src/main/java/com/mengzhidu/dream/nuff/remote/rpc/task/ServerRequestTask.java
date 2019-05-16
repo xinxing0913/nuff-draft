@@ -56,6 +56,7 @@ public class ServerRequestTask implements Runnable {
                     lastMethodName = methodName;
                 }
 
+
                 result = methodAccess.invoke(beanObject, lastMethodIndex, args);
 
                 Channel channel = requestWrapper.getChannel();

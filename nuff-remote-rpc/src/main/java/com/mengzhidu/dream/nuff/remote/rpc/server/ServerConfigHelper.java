@@ -1,5 +1,7 @@
 package com.mengzhidu.dream.nuff.remote.rpc.server;
 
+import com.mengzhidu.dream.nuff.remote.rpc.config.ServerConfig;
+
 /**
  * ServerConfig的配置项
  */

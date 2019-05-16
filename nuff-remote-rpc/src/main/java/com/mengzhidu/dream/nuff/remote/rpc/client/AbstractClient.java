@@ -1,6 +1,7 @@
 package com.mengzhidu.dream.nuff.remote.rpc.client;
 
-import com.mengzhidu.dream.nuff.remote.rpc.DaemonThread;
+import com.mengzhidu.dream.nuff.remote.rpc.config.ClientConfig;
+import com.mengzhidu.dream.nuff.remote.rpc.task.DaemonThread;
 import com.mengzhidu.dream.nuff.remote.rpc.handler.ClientChannelInactiveHandler;
 import com.mengzhidu.dream.nuff.remote.rpc.handler.ClientResponseHandler;
 import com.mengzhidu.dream.nuff.remote.rpc.hook.RPCInvokeHook;
@@ -32,6 +33,11 @@ public abstract class AbstractClient implements Client{
     }
 
     @Override
+    public void config(ClientConfig clientConfig) {
+        this.clientConfig = clientConfig;
+    }
+
+    @Override
     public void init(ClientConfig clientConfig) throws Exception{
         if (inactiveHandler == null) {
             inactiveHandler = new ClientChannelInactiveHandler(this);
@@ -45,7 +51,7 @@ public abstract class AbstractClient implements Client{
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        Class clazz = method.getClass();
+        Class clazz = method.getDeclaringClass();
 
         if (rpcInvokeHook != null) {
             rpcInvokeHook.beforeInvoke(clazz, method.getName(), args);

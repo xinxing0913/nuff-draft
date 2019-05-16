@@ -53,4 +53,14 @@ public class RPCResponse {
     public void setSuccess(boolean success) {
         this.success = success;
     }
+
+    @Override
+    public String toString() {
+        return "RPCResponse{" +
+                "requestId=" + requestId +
+                ", result=" + result +
+                ", throwable=" + throwable +
+                ", success=" + success +
+                '}';
+    }
 }
